@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin id="com.minits.push" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>
+		MinitsPushPlugin
+	</name>
+	<js-module name="MinitsPushPlugin" src="www/MinitsPushPlugin.js">
+		<clobbers target="cordova.plugins.MinitsPushPlugin" />
+	</js-module>
+	<platform name="android">
+		<framework src="com.onesignal:OneSignal:3.15.3" />
+		<config-file parent="/*" target="res/xml/config.xml">
+			<feature name="MinitsPushPlugin">
+				<param name="android-package" value="com.minits.push.MinitsPushPlugin" />
+			</feature>
+		</config-file>
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">
+			<service android:name="com.minits.push.NotificationExtenderService" android:permission="android.permission.BIND_JOB_SERVICE" android:exported="false">
+				<intent-filter>
+					<action android:name="com.onesignal.NotificationExtender" />
+				</intent-filter>
+			</service>
+		</config-file>
+		<config-file parent="/*" target="AndroidManifest.xml">
+		</config-file>
+		<source-file src="src/android/MinitsNotificationExtenderService.java" target-dir="src/com/minits/push/MinitsPushPlugin" />
+		<source-file src="src/android/MinitsPushPlugin.java" target-dir="src/com/minits/push/MinitsPushPlugin" />
+	</platform>
+</plugin>
